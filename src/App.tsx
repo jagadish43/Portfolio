@@ -10,7 +10,7 @@ import Certificates from "./pages/Certificates";
 import Contact from "./pages/Contact";
 
 function App() {
-  const [scrolled, setScrolled] = useState(false);
+  const [, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
