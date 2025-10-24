@@ -4,13 +4,21 @@ import { useTheme } from "../context/ThemeContext";
 
 interface NavbarProps {
   scrollToSection: (id: string) => void;
+  activeSection: string;
 }
 
-const Navbar = ({ scrollToSection }: NavbarProps) => {
+const Navbar = ({ scrollToSection, activeSection }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggleTheme, currentTheme } = useTheme();
 
   const menuItems = ["home", "about", "experience", "projects", "certificates", "contact"];
+
+  const handleMenuItemClick = (item: string) => {
+    scrollToSection(item);
+    setMenuOpen(false);
+  };
+  
+  const isItemActive = (item: string) => item === activeSection;
 
   return (
     <nav
@@ -24,7 +32,7 @@ const Navbar = ({ scrollToSection }: NavbarProps) => {
       <div className="container mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
         <div
-          onClick={() => scrollToSection("home")}
+          onClick={() => handleMenuItemClick("home")}
           className="text-2xl font-bold cursor-pointer select-none"
           style={{
             color: currentTheme.accent,
@@ -39,8 +47,11 @@ const Navbar = ({ scrollToSection }: NavbarProps) => {
             <li key={item}>
               <button
                 onClick={() => scrollToSection(item)}
-                style={{ color: currentTheme.textSecondary }}
-                className="capitalize font-medium hover:text-orange-500 transition"
+                // Dynamic style for active link (Desktop)
+                style={{ 
+                  color: isItemActive(item) ? currentTheme.accent : currentTheme.textSecondary 
+                }}
+                className="capitalize font-medium hover:text-orange-500 transition" 
               >
                 {item}
               </button>
@@ -61,36 +72,42 @@ const Navbar = ({ scrollToSection }: NavbarProps) => {
             {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
           </button>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - The only place the menu icon toggles to X */}
           <button
             className="md:hidden p-2 rounded hover:bg-gray-200/30"
             onClick={() => setMenuOpen(!menuOpen)}
+            style={{ color: currentTheme.textPrimary }}
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            {/* FIX: This button now serves as both the open and close (X) button. */}
+            {menuOpen ? <X size={24} /> : <Menu size={24} />} 
           </button>
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Dropdown (Small Box with NO internal Close Button) */}
       {menuOpen && (
         <div
           style={{
             backgroundColor: currentTheme.cardBg,
-            borderLeft: `1px solid ${currentTheme.border}`,
+            boxShadow: `0 4px 6px -1px ${currentTheme.border}`, 
+            border: `1px solid ${currentTheme.border}`,
           }}
-          className="md:hidden fixed top-0 right-0 h-full w-2/3 max-w-xs shadow-xl rounded-l-3xl z-50 p-8 animate-slideIn"
+          className="md:hidden absolute top-full right-6 w-11/12 max-w-xs shadow-lg rounded-xl z-50 p-6 transition-all duration-300 ease-in-out origin-top-right animate-slideIn" 
         >
-
-          <ul className="flex flex-col items-start space-y-6 mt-8 pl-4">
+          {/* FIX: Removed the redundant internal Close Button (X icon) here. 
+            The one in the main navbar handles closing.
+          */}
+          
+          <ul className="flex flex-col items-start space-y-4 pt-4"> {/* Added a bit of top padding */}
             {menuItems.map((item) => (
-              <li key={item}>
+              <li key={item} className="w-full">
                 <button
-                  onClick={() => {
-                    scrollToSection(item);
-                    setMenuOpen(false); // close after selecting
+                  onClick={() => handleMenuItemClick(item)}
+                  style={{ 
+                    // FIX: Removed background/border to get rid of the "black line" box
+                    color: isItemActive(item) ? currentTheme.accent : currentTheme.textPrimary, 
                   }}
-                  style={{ color: currentTheme.textPrimary }}
-                  className="capitalize text-lg font-medium hover:text-orange-500 transition"
+                  className="capitalize text-lg font-medium w-full text-left p-2 rounded hover:text-orange-500 transition"
                 >
                   {item}
                 </button>

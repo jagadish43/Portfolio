@@ -1,44 +1,41 @@
 import { useTheme } from "../context/ThemeContext";
-import { Briefcase, Code, Award } from "lucide-react";
+import { Briefcase } from "lucide-react";
 
 const Experience = () => {
   const { currentTheme, theme } = useTheme();
 
   const experiences = [
     {
-      title: "Full Stack & Mobile Developer",
+      title: "Full Stack Developer",
       company: "Pixart Technologies",
       period: "Sep 2024 - Present",
       points: [
-        "Built mobile applications using React Native, Firebase, and DynamoDB.",
-        "Developed a full School Management System using Laravel and MySQL.",
-        "Improved UX/UI with responsive layouts and smooth animations.",
-      ],
-      icon: <Briefcase size={38} color="#ff7a00" />,
+        "Developed SaaS web application for school management using Laravel and MySQL.",
+        "Built field sales mobile app with real-time tracking and Google Sheets integration.",
+        "Created video automation tool with Python, OpenCV, and MoviePy, generating 300+ videos in 1.5 hours."
+      ]
     },
     {
       title: "Python Full Stack Trainee",
-      company: "Codegan Destination",
+      company: "Codegnan",
       period: "May 2024 - Sep 2024",
       points: [
-        "Gained deep knowledge of backend logic and frontend integration.",
-        "Worked on multiple mini projects and learned production deployment.",
-      ],
-      icon: <Code size={38} color="#ff8a33" />,
+        "Learned full-stack development with Python/Django and MySQL.",
+        "Built clean, scalable web applications integrating frontend and backend."
+      ]
     },
     {
       title: "Frontend Developer Intern",
-      company: "1Stop Solutions",
+      company: "1Stop.ai",
       period: "Jan 2024 - Mar 2024",
       points: [
-        "Created dynamic, responsive websites with React and TailwindCSS.",
-        "Collaborated on UI/UX improvements and animations.",
-      ],
-      icon: <Award size={38} color="#ff9b33" />,
-    },
+        "Developed responsive to-do list web app using HTML, CSS, JS, and Bootstrap.",
+        "Enhanced skills in interactive frontend development."
+      ]
+    }
   ];
 
-  // Choose background colors that look good in both light and dark themes
+  // Card background colors for light/dark themes
   const cardBg =
     theme === "light"
       ? "bg-gradient-to-r from-orange-50 to-orange-100"
@@ -69,7 +66,9 @@ const Experience = () => {
             >
               <div className="p-6 md:p-8 flex flex-col md:flex-row items-start gap-6">
                 {/* Icon */}
-                <div className="flex-shrink-0">{exp.icon}</div>
+                <div className="flex-shrink-0">
+                  <Briefcase size={32} color={currentTheme.accent} />
+                </div>
 
                 {/* Content */}
                 <div className="flex-1 space-y-4">
@@ -89,6 +88,7 @@ const Experience = () => {
                     </p>
                   </div>
 
+                  {/* Concise Points */}
                   <ul className="list-disc pl-6 space-y-2">
                     {exp.points.map((p, i) => (
                       <li

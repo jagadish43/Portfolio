@@ -1,12 +1,53 @@
 import { useTheme } from "../context/ThemeContext";
-import LaptopMan from "../assets/laptop-looking.svg"; 
+import LaptopMan from "../assets/svg/laptop-looking.svg"; 
+import { useEffect, useState } from "react";
 
 interface HomeProps {
   scrollToSection: (id: string) => void;
 }
 
+const roles = [
+  "Full Stack Developer",
+  "Mobile Application Developer",
+  "Automation Engineer",
+];
+
 const Home = ({ scrollToSection }: HomeProps) => {
   const { currentTheme } = useTheme();
+  const [displayText, setDisplayText] = useState("");
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentRole = roles[roleIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!deleting) {
+      if (charIndex < currentRole.length) {
+        timeout = setTimeout(() => {
+          setDisplayText(currentRole.substring(0, charIndex + 1));
+          setCharIndex(charIndex + 1);
+        }, 100);
+      } else {
+        // Pause before deleting
+        timeout = setTimeout(() => setDeleting(true), 1000);
+      }
+    } else {
+      if (charIndex > 0) {
+        timeout = setTimeout(() => {
+          setDisplayText(currentRole.substring(0, charIndex - 1));
+          setCharIndex(charIndex - 1);
+        }, 50);
+      } else {
+        // Move to next role
+        setDeleting(false);
+        setRoleIndex((roleIndex + 1) % roles.length);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, deleting, roleIndex]);
 
   return (
     <section
@@ -24,14 +65,23 @@ const Home = ({ scrollToSection }: HomeProps) => {
           className="text-5xl md:text-6xl font-bold leading-tight"
         >
           Hello, <br /> I’m{" "}
-          <span style={{ color: currentTheme.accent }}>Jagadish</span>.
+          <span style={{ color: currentTheme.accent }}>Jagadish</span>
         </h1>
 
+        <h2
+          style={{ color: currentTheme.accent }}
+          className="text-2xl md:text-3xl font-semibold mt-2"
+        >
+          {displayText}
+          <span className="animate-pulse">|</span>
+        </h2>
+
+        {/* Optional Extra Polish */}
         <p
           style={{ color: currentTheme.textSecondary }}
-          className="text-lg md:text-xl max-w-md mx-auto md:mx-0"
+          className="text-lg md:text-xl max-w-md mx-auto md:mx-0 mt-2"
         >
-          Full Stack Developer with 1+ years of experience at Pixart.
+          Building web, mobile, and automated solutions that solve real problems.
         </p>
 
         <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
