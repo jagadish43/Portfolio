@@ -1,5 +1,5 @@
 import { useTheme } from "../context/ThemeContext";
-import LaptopMan from "../assets/svg/laptop-looking.svg"; 
+import LaptopMan from "/svg/laptop-looking.svg"; 
 import { useEffect, useState } from "react";
 
 interface HomeProps {

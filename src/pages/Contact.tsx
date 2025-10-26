@@ -1,6 +1,6 @@
 import { useTheme } from "../context/ThemeContext";
 import { Mail, Phone, Linkedin, Github, Code, Send , Eye} from "lucide-react";
-import resume from "../assets/resume/Jagadish.pdf";
+import resume from "/resume/Jagadish.pdf";
 import { useState } from "react";
 
 const Contact = () => {

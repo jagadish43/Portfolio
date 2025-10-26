@@ -1,9 +1,9 @@
 import { useTheme } from "../context/ThemeContext";
 import { useState } from "react";
-import AwsImg from "../assets/Images/aws.jpg";
-import WebDevImg from "../assets/Images/stop.jpg";
-import OopsImg from "../assets/Images/oops.jpg";
-import pythonImg from "../assets/Images/pythonImage.png";
+import AwsImg from "/Images/aws.jpg";
+import WebDevImg from "/Images/stop.jpg";
+import OopsImg from "/Images/oops.jpg";
+import pythonImg from "/Images/pythonImage.png";
 
 const Certificates = () => {
   const { currentTheme } = useTheme();
