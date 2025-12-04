@@ -21,7 +21,7 @@ const Contact = () => {
   const handleSend = () => {
     const { email, contact, message } = formData;
     const text = `Hello Jagadish,%0A%0AEmail: ${email}%0AContact: ${contact}%0AMessage: ${message}`;
-    window.open(`https://wa.me/919063664963?text=${text}`, "_blank");
+    window.open(`https://wa.me/919107772929?text=${text}`, "_blank");
   };
 
   // Only the social icons that should have hover effects (small buttons)
@@ -75,11 +75,11 @@ const Contact = () => {
               <Phone size={32} color={currentTheme.accent} className="mx-auto md:mx-0 mb-4" />
               <h3 className="font-semibold text-lg mb-2">Phone</h3>
               <a
-                href="tel:+919063664963"
+                href="tel:+919107772929"
                 style={{ color: currentTheme.textSecondary }}
                 className="block hover:text-orange-500 transition"
               >
-                +91 90636 64963
+                +91 9107772929
               </a>
             </div>
 
